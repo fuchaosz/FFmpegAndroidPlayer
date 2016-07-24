@@ -1,7 +1,9 @@
 package com.fuchao.ffmpegandroidplayer;
 
+import android.content.res.ObbInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String TAG = "VideoPlayer";
     public static final String PATH = "/mnt/sdacrd/a.mp4";
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //创建视屏播放器
                 videoPlayer = new VideoPlayer(PATH);
+                Log.i(TAG, "videoplayer.play返回值=" + videoPlayer.play());
                 videoPlayer.init(new Object());
             }
         });

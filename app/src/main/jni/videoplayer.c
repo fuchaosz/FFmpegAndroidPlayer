@@ -1,17 +1,21 @@
 //实际播放类
 // Created by fuchao on 16-7-22.
 #include "com_fuchao_ffmpegandroidplayer_VideoPlayer.h"
-//#include "libavcodec/avcodec.h"
-//#include "libavformat/avformat.h"
-//#include "libswscale/swscale.h"
+#include "libavcodec/avcodec.h"
+#include "libavformat/avformat.h"
+#include "libswscale/swscale.h"
 #include <android/native_window.h>
 #include <android/native_window_jni.h>
 #include <android/log.h>
-#include "log.h"
+#include <stdio.h>
 
+//定义日志打印
+#define  LOG_TAG    "VideoPlayer"
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
 //定义全局的文件地址变量
-//char *path;
+char *path = NULL;
 
 /*
  * Class:     com_fuchao_ffmpegandroidplayer_VideoPlayer
@@ -21,19 +25,24 @@
 JNIEXPORT void JNICALL Java_com_fuchao_ffmpegandroidplayer_VideoPlayer_init
         (JNIEnv *env, jobject jobj, jobject surfaceObj)
 {
+    LOGE("Hello world");
     //取出文件路径
     jclass cls = (*env)->GetObjectClass(env, jobj);
-    jfieldID fid = (*env)->GetFieldID(env, cls, "filePath", "Ljava/Lang/String");
+    jfieldID fid = (*env)->GetFieldID(env, cls, "filePath", "Ljava/lang/String;");
     jstring file_path = (jstring) (*env)->GetObjectField(env, jobj, fid);
-    char *path;
-    (*env)->GetStringUTFChars(env, file_path, path);
-    LOGE("ada");
+    path = (*env)->GetStringUTFChars(env, file_path, NULL);
+    if (path == NULL) {
+        LOGE("获取java中的path失败");
+    }
+    else {
+        //输出要播放的文件的地址
+        LOGE("%s", path);
+    }
     //AVCode *codec = NULL;
     //注册所有类型的格式
     //av_register_all();
     //删除局部引用
     (*env)->DeleteLocalRef(env, cls);
-    (*env)->DeleteLocalRef(env, fid);
     (*env)->DeleteLocalRef(env, file_path);
 }
 
@@ -45,7 +54,7 @@ JNIEXPORT void JNICALL Java_com_fuchao_ffmpegandroidplayer_VideoPlayer_init
 JNIEXPORT jint JNICALL Java_com_fuchao_ffmpegandroidplayer_VideoPlayer_play
         (JNIEnv *env, jobject jobj)
 {
-    return 0;
+    return 1;
 }
 
 /*
