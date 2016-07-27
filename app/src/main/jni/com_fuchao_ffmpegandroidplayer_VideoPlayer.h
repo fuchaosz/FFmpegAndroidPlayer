@@ -12,7 +12,7 @@ extern "C" {
  * Method:    init
  * Signature: (Ljava/lang/Object;)V
  */
-JNIEXPORT void JNICALL Java_com_fuchao_ffmpegandroidplayer_VideoPlayer_init
+JNIEXPORT jint JNICALL Java_com_fuchao_ffmpegandroidplayer_VideoPlayer_init
   (JNIEnv *, jobject, jobject);
 
 /*

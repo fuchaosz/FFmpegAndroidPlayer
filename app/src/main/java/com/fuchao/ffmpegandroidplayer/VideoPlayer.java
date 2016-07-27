@@ -21,7 +21,7 @@ public class VideoPlayer {
     }
 
     //初始化播放器
-    public native void init(Object surface);
+    public native int init(Object surface);
 
     //播放
     public native int play();
