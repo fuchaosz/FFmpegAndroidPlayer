@@ -12,7 +12,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "VideoPlayer";
-    public static final String PATH = "/mnt/sdacrd/a.mp4";
+    public static final String PATH = "/mnt/sdcard/a.mp4";
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private VideoPlayer videoPlayer;
@@ -23,27 +23,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         this.surfaceHolder = surfaceView.getHolder();
-        //测试代码
-        Button btn = (Button) findViewById(R.id.btn_test);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //创建视屏播放器
-                videoPlayer = new VideoPlayer(PATH);
-                Log.i(TAG, "videoplayer.play返回值=" + videoPlayer.play());
-                videoPlayer.init(new Object());
-            }
-        });
-
-        /*
         //创建视屏播放器
         this.videoPlayer = new VideoPlayer(PATH);
         this.surfaceHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
-                //SurfaceView创建完毕后就可以开始播放了
-                videoPlayer.init(surfaceHolder.getSurface());
-                videoPlayer.play();
+                final SurfaceHolder holder = surfaceHolder;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //SurfaceView创建完毕后就可以开始播放了
+                        videoPlayer.init(holder.getSurface());
+                    }
+                }).start();
             }
 
             @Override
@@ -57,6 +49,5 @@ public class MainActivity extends AppCompatActivity {
                 videoPlayer.stop();
             }
         });
-        */
     }
 }
